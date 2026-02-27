@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Homepage</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+    <div
+      class="container d-flex justify-content-center"
+      style="margin-top: 15vh"
+    >
+      <form action="/login" method="POST" class="w-50">
+        <h3 class="text-center mb-4">Login</h3>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center mt-4">
+          <!-- slightly bigger margin -->
+          <button type="submit" class="btn btn-primary w-25 btn-sm">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <%- include('./partials/scripts') %>
+  </body>
+</html>
