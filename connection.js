@@ -9,6 +9,6 @@ export const connectDB = async () => {
     console.log("Database connected");
   } catch (error) {
     console.error("DB connection failed", error);
-    process.exit(1); // immediately stops the Node.js ap, 0 ->success (normal shutdown), 1 -> Error (something failed)
+    process.exit(1); // immediately stops the Node.js app, 0 ->success (normal shutdown), 1 -> Error (something failed)
   }
 };
