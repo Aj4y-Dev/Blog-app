@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 
 import { connectDB } from "./connection.js";
 import authRouter from "./src/routes/auth.route.js";
+import blogRouter from "./src/routes/blog.route.js";
 import { checkUserAuth } from "./src/middleware/auth.js";
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/v1", authRouter);
+app.use("/blog", blogRouter);
 
 app.get("/", checkUserAuth, (req, res) => {
   res.render("home", { user: req.user });
