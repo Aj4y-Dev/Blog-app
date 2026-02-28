@@ -8,12 +8,12 @@ export const handleUserSignup = async (req, res) => {
 
     //Validate fields
     if (!email || !username || !password) {
-      return res.status(400).json({ message: "All field required" });
+      return res.render("signup", { error: "All fields are required" });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already registered" });
+      return res.render("signup", { error: "Email already registered" });
     }
 
     //Hash password
@@ -48,7 +48,7 @@ export const handleUserSignup = async (req, res) => {
     return res.redirect("/");
   } catch (error) {
     console.log("Error in handle user signup", error);
-    res.status(400).json({ message: "Internal server error" });
+    return res.render("signup", { error: "Internal server error" });
   }
 };
 
@@ -58,18 +58,18 @@ export const handleUserLogin = async (req, res) => {
 
     //Validate fields
     if (!username || !password) {
-      return res.status(400).json({ message: "All field required" });
+      return res.render("login", { error: "All fields are required" });
     }
 
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.render("login", { error: "Invalid credentials" });
     }
 
     // check Hash password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.render("login", { error: "Incorrect username or password" });
     }
 
     //jwt created
@@ -87,12 +87,12 @@ export const handleUserLogin = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: false, // true in production (HTTPS)
     });
 
     return res.redirect("/");
   } catch (error) {
     console.log("Login error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.render("login", { error: "Internal server error" });
   }
 };
