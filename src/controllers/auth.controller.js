@@ -40,15 +40,12 @@ export const handleUserSignup = async (req, res) => {
       },
     );
 
-    res.status(201).json({
-      success: true,
-      token,
-      user: {
-        id: create._id,
-        email: create.email,
-        username: create.username,
-      },
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
     });
+
+    return res.redirect("/");
   } catch (error) {
     console.log("Error in handle user signup", error);
     res.status(400).json({ message: "Internal server error" });
@@ -61,18 +58,18 @@ export const handleUserLogin = async (req, res) => {
 
     //Validate fields
     if (!username || !password) {
-      res.status(400).json({ message: "All field required" });
+      return res.status(400).json({ message: "All field required" });
     }
 
     const user = await User.findOne({ username });
     if (!user) {
-      res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     // check Hash password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
     //jwt created
@@ -88,15 +85,12 @@ export const handleUserLogin = async (req, res) => {
       },
     );
 
-    res.status(201).json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-        username: user.username,
-      },
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
     });
+
+    return res.redirect("/");
   } catch (error) {
     console.log("Login error:", error);
     return res.status(500).json({ message: "Internal server error" });
