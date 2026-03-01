@@ -40,8 +40,4 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/logout", (req, res) => {
-  res.clearCookie("token").redirect("/");
-});
-
 app.listen(PORT, () => console.log(`server is listing in port ${PORT}`));

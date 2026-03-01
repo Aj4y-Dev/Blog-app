@@ -96,3 +96,13 @@ export const handleUserLogin = async (req, res) => {
     return res.render("login", { error: "Internal server error" });
   }
 };
+
+export const handleUserLogout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.redirect("/");
+  } catch (error) {
+    console.log("Logout Error", error);
+    return res.status(500).send("Something went wrong");
+  }
+};
