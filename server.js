@@ -7,6 +7,7 @@ import { connectDB } from "./connection.js";
 import authRouter from "./src/routes/auth.route.js";
 import blogRouter from "./src/routes/blog.route.js";
 import { checkUserAuth } from "./src/middleware/auth.js";
+import Blog from "./src/model/blog.js";
 
 dotenv.config();
 
@@ -21,12 +22,14 @@ app.set("views", path.resolve("./src/views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.static(path.resolve("./public")));
 
 app.use("/api/v1", authRouter);
-app.use("/blog", blogRouter);
+app.use("/blog", checkUserAuth, blogRouter);
 
-app.get("/", checkUserAuth, (req, res) => {
-  res.render("home", { user: req.user });
+app.get("/", checkUserAuth, async (req, res) => {
+  const blogs = await Blog.find({});
+  res.render("home", { user: req.user, blogs: blogs });
 });
 
 app.get("/signup", (req, res) => {
