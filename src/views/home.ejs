@@ -6,9 +6,31 @@
   </head>
   <body>
     <%- include('./partials/nav') %>
-    <br /><br />
-    <%= JSON.stringify(user) %>
-    <p>This is a home page</p>
+    <div class="container py-5">
+      <div class="row align-items-center mb-5">
+        <div class="col-md-8">
+          <h1 class="fw-bold display-5 mb-3">Welcome to Blogify</h1>
+          <p class="lead text-muted">Explore the latest stories, insights, and ideas from our community.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+          <% if (locals.user) { %>
+            <a href="/blog/add-new" class="btn btn-primary fw-semibold">Share Your Story</a>
+          <% } else { %>
+            <a href="/signup" class="btn btn-primary fw-semibold">Join the Community</a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Blog posts will go here -->
+        <div class="col-12 text-center py-5">
+          <div class="card bg-light border-0 py-5">
+            <h4 class="text-muted">No blogs found yet.</h4>
+            <p class="mb-0">Be the first to share something amazing!</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include('./partials/scripts') %>
   </body>
 </html>
