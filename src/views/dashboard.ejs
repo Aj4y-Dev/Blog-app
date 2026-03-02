@@ -9,17 +9,79 @@
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <div class="card p-4 p-md-5 shadow-sm border-0">
-            <h2 class="fw-bold mb-4">Admin Dashboard</h2>
-            <p class="text-muted mb-0">
-              Welcome back, <strong><%= user.username %></strong>!
-            </p>
-            <hr class="my-4">
-            <div class="alert alert-info border-0 shadow-sm">
-              <i class="bi bi-info-circle me-2"></i>
-              Manage your blogs and community from this panel.
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-12">
+          <div class="card p-4 shadow-sm border-0">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="fw-bold mb-0">Admin Dashboard</h2>
+              <span class="badge bg-primary px-3 py-2">Welcome, <%= user.username %></span>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (locals.users && users.length > 0) { %>
+                    <% users.forEach(u => { %>
+                      <tr id="user-<%= u._id %>">
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="<%= u.profileImageUrl %>" alt="" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                            <span class="fw-semibold"><%= u.username %></span>
+                          </div>
+                        </td>
+                        <td><%= u.email %></td>
+                        <td>
+                          <span class="badge rounded-pill <%= u.role === 'admin' ? 'bg-danger' : 'bg-secondary' %>">
+                            <%= u.role %>
+                          </span>
+                        </td>
+                        <td class="text-end">
+                          <a href="/dashboard/edit/<%= u._id %>" class="btn btn-sm btn-outline-primary me-2">Update</a>
+                          <button onclick="deleteUser('<%= u._id %>')" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  <% } else { %>
+                    <tr>
+                      <td colspan="4" class="text-center py-4 text-muted">No users found</td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function deleteUser(id) {
+        if (confirm('Are you sure you want to delete this user?')) {
+          try {
+            const response = await fetch(`/dashboard/delete/${id}`, {
+              method: 'DELETE',
+            });
+            if (response.ok) {
+              window.location.reload();
+            } else {
+              alert('Failed to delete user');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred');
+          }
+        }
+      }
+    </script>
         </div>
       </div>
     </div>

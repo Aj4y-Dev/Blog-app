@@ -8,6 +8,7 @@ import authRouter from "./src/routes/auth.route.js";
 import blogRouter from "./src/routes/blog.route.js";
 import { checkUserAuth, checkAdmin } from "./src/middleware/auth.js";
 import Blog from "./src/model/blog.js";
+import adminUser from "./src/routes/admin/user.route.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.resolve("./public")));
 
 app.use("/api/v1", authRouter);
 app.use("/blog", checkUserAuth, blogRouter);
+app.use("/dashboard", checkUserAuth, checkAdmin, adminUser);
 
 app.get("/", checkUserAuth, async (req, res) => {
   const blogs = await Blog.find({});
@@ -45,10 +47,6 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/dashboard", checkUserAuth, checkAdmin, (req, res) => {
-  res.render("dashboard", {
-    user: req.user,
-  });
-});
+
 
 app.listen(PORT, () => console.log(`server is listing in port ${PORT}`));
