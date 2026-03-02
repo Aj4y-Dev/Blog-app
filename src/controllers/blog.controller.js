@@ -6,7 +6,15 @@ export const getNewBlog = async (req, res) => {
   });
 };
 
-export const getSingleBlog = async (req, res) => {};
+export const getSingleBlog = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.parmas._id);
+    return res.render("home", {
+      user: req.user,
+      blog,
+    });
+  } catch (error) {}
+};
 
 export const getAllBlogs = async (req, res) => {};
 
@@ -16,7 +24,6 @@ export const deleteSingleBlog = async (req, res) => {};
 
 export const handleBlogs = async (req, res) => {
   const { title, body } = req.body;
-  console.log("Creating blog with user:", req.user);
   const blog = await Blog.create({
     body,
     title,
