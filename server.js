@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cookieParser from "cookie-parser";
 
-import { connectDB } from "./connection.js";
+import { connectDB } from "./src/config/connection.js";
 import authRouter from "./src/routes/auth.route.js";
 import blogRouter from "./src/routes/blog.route.js";
 import { checkUserAuth, checkAdmin } from "./src/middleware/auth.js";
@@ -29,6 +29,11 @@ app.use("/blog", checkUserAuth, blogRouter);
 
 app.get("/", checkUserAuth, async (req, res) => {
   const blogs = await Blog.find({});
+
+  if (req.user.role === "admin") {
+    return res.redirect("/dashboard");
+  }
+
   res.render("home", { user: req.user, blogs: blogs });
 });
 
@@ -40,9 +45,10 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-//if i use only the checkAdmin middleware then req.user === undefined
 app.get("/dashboard", checkUserAuth, checkAdmin, (req, res) => {
-  res.render("dashboard");
+  res.render("dashboard", {
+    user: req.user,
+  });
 });
 
 app.listen(PORT, () => console.log(`server is listing in port ${PORT}`));

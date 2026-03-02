@@ -6,7 +6,23 @@
   </head>
   <body>
     <%- include('./partials/nav') %>
-    <p>Admin Only</p>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card p-4 p-md-5 shadow-sm border-0">
+            <h2 class="fw-bold mb-4">Admin Dashboard</h2>
+            <p class="text-muted mb-0">
+              Welcome back, <strong><%= user.username %></strong>!
+            </p>
+            <hr class="my-4">
+            <div class="alert alert-info border-0 shadow-sm">
+              <i class="bi bi-info-circle me-2"></i>
+              Manage your blogs and community from this panel.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <%- include('./partials/scripts') %>
   </body>
 </html>
