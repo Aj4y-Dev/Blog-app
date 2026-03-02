@@ -17,9 +17,11 @@ export const checkUserAuth = (req, res, next) => {
     }
 
     // Attach decoded info to req.user
-    // This is the logged-in user's info that we pass in jwt
-    // So any route after this middleware can access req.user
-    req.user = decoded;
+    // Support both _id and userId for backward compatibility with existing sessions
+    req.user = {
+      ...decoded,
+      _id: decoded._id || decoded.userId,
+    };
 
     // Continue to the requested route
     next();

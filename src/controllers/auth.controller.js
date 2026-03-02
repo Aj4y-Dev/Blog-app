@@ -30,7 +30,7 @@ export const handleUserSignup = async (req, res) => {
     //jwt created
     const token = jwt.sign(
       {
-        userId: create._id,
+        _id: create._id,
         username: create.username,
         role: create.role,
       },
@@ -75,7 +75,7 @@ export const handleUserLogin = async (req, res) => {
     //jwt created
     const token = jwt.sign(
       {
-        userId: user._id,
+        _id: user._id,
         username: user.username,
         role: user.role,
       },

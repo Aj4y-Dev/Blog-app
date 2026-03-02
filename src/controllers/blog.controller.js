@@ -16,11 +16,12 @@ export const deleteSingleBlog = async (req, res) => {};
 
 export const handleBlogs = async (req, res) => {
   const { title, body } = req.body;
+  console.log("Creating blog with user:", req.user);
   const blog = await Blog.create({
     body,
     title,
     createdBy: req.user._id,
     coverImageURL: `/uploads/${req.file.filename}`,
   });
-  return res.redirect(`/`);
+  return res.redirect(`/blog/${blog._id}`);
 };
