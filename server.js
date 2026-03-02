@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./connection.js";
 import authRouter from "./src/routes/auth.route.js";
 import blogRouter from "./src/routes/blog.route.js";
-import { checkUserAuth } from "./src/middleware/auth.js";
+import { checkUserAuth, checkAdmin } from "./src/middleware/auth.js";
 import Blog from "./src/model/blog.js";
 
 dotenv.config();
@@ -38,6 +38,11 @@ app.get("/signup", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+//if i use only the checkAdmin middleware then req.user === undefined
+app.get("/dashboard", checkUserAuth, checkAdmin, (req, res) => {
+  res.render("dashboard");
 });
 
 app.listen(PORT, () => console.log(`server is listing in port ${PORT}`));
