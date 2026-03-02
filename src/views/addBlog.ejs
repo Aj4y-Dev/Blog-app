@@ -11,22 +11,30 @@
         <div class="col-lg-8">
           <div class="card p-4 p-md-5">
             <h2 class="fw-bold mb-4">Create a New Blog</h2>
-            <p class="text-muted mb-4">Welcome back, <strong><%= user.username %></strong>!</p>
+            <p class="text-muted mb-4">
+              Welcome back, <strong><%= user.username %></strong>!
+            </p>
 
             <form action="/blog" method="POST" enctype="multipart/form-data">
               <div class="mb-4">
-                <label for="coverImage" class="form-label small fw-semibold">Cover Image</label>
+                <label for="coverImage" class="form-label small fw-semibold"
+                  >Cover Image</label
+                >
                 <input
                   type="file"
                   class="form-control"
                   id="coverImage"
                   name="coverImage"
                 />
-                <div class="form-text mt-2 small text-muted">A high-quality image helps your blog stand out.</div>
+                <div class="form-text mt-2 small text-muted">
+                  A high-quality image helps your blog stand out.
+                </div>
               </div>
-              
+
               <div class="mb-4">
-                <label for="title" class="form-label small fw-semibold">Title</label>
+                <label for="title" class="form-label small fw-semibold"
+                  >Title</label
+                >
                 <input
                   type="text"
                   class="form-control form-control-lg"
@@ -38,12 +46,14 @@
               </div>
 
               <div class="mb-4">
-                <label for="body" class="form-label small fw-semibold">Content</label>
-                <textarea 
-                  name="body" 
-                  class="form-control" 
-                  id="body" 
-                  rows="10" 
+                <label for="body" class="form-label small fw-semibold"
+                  >Content</label
+                >
+                <textarea
+                  name="body"
+                  class="form-control"
+                  id="body"
+                  rows="10"
                   placeholder="Tell your story..."
                   required
                 ></textarea>
@@ -51,7 +61,9 @@
 
               <div class="d-flex justify-content-end gap-2 mt-4">
                 <a href="/" class="btn btn-light fw-semibold px-4">Cancel</a>
-                <button type="submit" class="btn btn-primary fw-semibold px-4">Publish Blog</button>
+                <button type="submit" class="btn btn-primary fw-semibold px-4">
+                  Publish Blog
+                </button>
               </div>
             </form>
           </div>

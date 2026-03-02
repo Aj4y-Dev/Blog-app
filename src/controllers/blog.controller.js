@@ -6,13 +6,21 @@ export const getNewBlog = async (req, res) => {
   });
 };
 
+export const getSingleBlog = async (req, res) => {};
+
+export const getAllBlogs = async (req, res) => {};
+
+export const updateSingleBlog = async (req, res) => {};
+
+export const deleteSingleBlog = async (req, res) => {};
+
 export const handleBlogs = async (req, res) => {
   const { title, body } = req.body;
   const blog = await Blog.create({
     body,
     title,
-    createdBy: req.user.userId,
+    createdBy: req.user._id,
     coverImageURL: `/uploads/${req.file.filename}`,
   });
-  return res.redirect("/");
+  return res.redirect(`/`);
 };
