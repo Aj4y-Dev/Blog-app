@@ -24,8 +24,8 @@
       <div class="row g-4">
         <% if (blogs.length > 0) { %>
           <% blogs.forEach(blog => { %>
-            <div class="col-md-4">
-              <div class="card h-100 shadow-sm border-0">
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100 shadow-sm border-0 blog-card">
                 <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="<%= blog.title %>" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                   <h5 class="card-title fw-bold"><%= blog.title %></h5>

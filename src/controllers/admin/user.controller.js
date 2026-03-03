@@ -56,14 +56,13 @@ export const handleUpdateUser = async (req, res) => {
 export const handleDeleteUser = async (req, res) => {
   try {
     const deleteUser = await User.findByIdAndDelete(req.params.id);
-
     if (!deleteUser) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ error: "User not found" });
     }
 
-    return res.redirect("/dashboard");
+    return res.status(200).json({ success: true, message: "User deleted successfully" });
   } catch (error) {
     console.log("error to get delete user", error);
-    return res.render("dashboard", { error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
