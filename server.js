@@ -31,11 +31,9 @@ app.use("/dashboard", checkUserAuth, checkAdmin, adminUser);
 
 app.get("/", checkUserAuth, async (req, res) => {
   const blogs = await Blog.find({});
-
   if (req.user.role === "admin") {
     return res.redirect("/dashboard");
   }
-
   res.render("home", { user: req.user, blogs: blogs });
 });
 
@@ -46,7 +44,5 @@ app.get("/signup", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
-
-
 
 app.listen(PORT, () => console.log(`server is listing in port ${PORT}`));

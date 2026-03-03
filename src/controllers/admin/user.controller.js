@@ -28,7 +28,7 @@ export const getOneUser = async (req, res) => {
 export const handleUpdateUser = async (req, res) => {
   try {
     const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after", //After updating the document, return the new updated version.
     });
 
     if (!updateUser) {
