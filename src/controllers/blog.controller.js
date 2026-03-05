@@ -44,6 +44,14 @@ export const getEditBlog = async (req, res) => {
 export const updateSingleBlog = async (req, res) => {
   try {
     const { title, body } = req.body;
+
+    // console.log(blog, req.user.id);
+
+    const blog = await Blog.findById(req.params.id);
+    if (blog !== req.user.id) {
+      return res.status(401).send("unauthuthorized");
+    }
+
     const updateData = { title, body };
 
     if (req.file) {
@@ -73,6 +81,12 @@ export const updateSingleBlog = async (req, res) => {
 export const deleteSingleBlog = async (req, res) => {
   try {
     const deleteBlog = await Blog.findByIdAndDelete(req.params.id);
+
+    const blog = await Blog.findById(req.params.id);
+
+    if (blog !== req.user.id) {
+      return res.status(401).send("unauthuthorized");
+    }
     if (!deleteBlog) {
       return res.status(404).send("Blog not found");
     }
